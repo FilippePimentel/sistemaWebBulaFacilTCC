@@ -1,0 +1,24 @@
+<br />
+<h5 class="text-info"><strong>Cadastro de Medicamento</strong></h5>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form #formCadastroMedicamento="ngForm" (submit)="cadastrarMedicamento(formCadastroMedicamento)">
+            <label>Nome:</label>
+            <input type="text" class="form-control" placeholder="Digite aqui" name="Nome"ngModel required/>
+            <br />
+            <label>Tipo:</label>
+            <input type="text" class="form-control" placeholder="Digite aqui" name="Tipo"ngModel required/>
+            <br />
+            <label>Laboratório:</label>
+            <input type="text" class="form-control" placeholder="Digite aqui" name="Laboratorio"ngModel required />
+            <br />
+            <button class="btn btn-success bg-info" type="submit">
+                Cadastrar Medicamento
+            </button>
+            <br>
+            <strong class="text-info">{{mensagem}}</strong>
+            <div style="width: 500px;white-space: pre-line" ><strong class="text-danger">{{erro_editado}}</strong></div>
+        </form>
+    </div>
+</div>

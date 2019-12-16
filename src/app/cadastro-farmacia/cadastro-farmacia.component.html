@@ -1,0 +1,56 @@
+<br />
+<h5 class="text-info"><strong>Cadastro de Farmácias</strong></h5>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form #formCadastro="ngForm" (submit)="cadastrarFarmacia(formCadastro)">
+            <label>Nome:</label>
+            <input type="text" class="form-control" placeholder="Digite aqui" name="Nome"ngModel required/>
+            <br />
+            <label>Razao social:</label>
+            <input type="text" class="form-control" placeholder="Digite aqui" name="RazaoSocial"ngModel required/>
+            <br />
+            <label>CNPJ:</label>
+            <input type="text" mask="00.000.000/0000-00" class="form-control" placeholder="Digite aqui" name="Cnpj"ngModel required />
+            <br />
+            <label>Email:</label>
+            <input type="email" class="form-control" placeholder="Digite aqui" name="Email"ngModel required/>
+            <br />
+            <label>Senha:</label>
+            <input type="password" placeholder="Digite aqui" class="form-control" name="Senha"ngModel required/>
+            <br />
+            <label>Confirmar Senha:</label>
+            <input type="password"  placeholder="Digite aqui" class="form-control" name="ConfirmarSenha" ngModel required/>
+            <br />
+            <label>CEP:</label>
+            <input type="text" class="form-control" placeholder="Digite aqui" name="Cep" mask="00000-000"ngModel required/>
+            <br />
+            <label>UF:</label>
+            <input type="text" class="form-control" placeholder="Digite aqui" name="Uf" ngModel required maxlength="2"/>
+            <br />
+            <label>Cidade:</label>
+            <input type="text" class="form-control" placeholder="Digite aqui" name="Cidade" ngModel required/>
+            <br />
+            <label>Rua:</label>
+            <input type="Rua"  aria-multiline="true" class="form-control" placeholder="Digite aqui" name="Rua"ngModel/>
+            <br />
+            <label>Complemento:</label>
+            <input type="text"  class="form-control" placeholder="Digite aqui" name="Complemento"ngModel/>
+            <br />
+            <label>Telefone:</label>
+            <input type="text"   mask="(00)00000-0000"  class="form-control" placeholder="Digite aqui" name="Telefone"ngModel/>
+            <br />
+            <label>Site:</label>
+            <input type="text"   class="form-control" placeholder="Digite aqui" name="Site"ngModel/>
+            <br />
+
+            <button class="btn btn-success bg-info" type="submit">
+                Cadastrar Farmácia
+            </button>
+            <br />
+            <strong class="text-info">{{mensagem}}</strong>
+            <br />
+            <div style="width: 500px;white-space: pre-line" ><strong class="text-danger">{{erro_editado}}</strong></div>
+        </form>
+    </div>
+</div>

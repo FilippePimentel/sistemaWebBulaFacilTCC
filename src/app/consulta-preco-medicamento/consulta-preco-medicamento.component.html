@@ -1,0 +1,148 @@
+<br>
+<br>
+<h5 class="text-info"><strong>Consulta de Preços</strong></h5>
+<hr />
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="bg-info">Nome do Medicamento</th>
+            <th class="bg-info">Nome da Farmácia</th>
+            <th class="bg-info">Preço</th>
+            <th class="bg-info">Opções</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of precos; let i = index">
+            <td><strong>{{item.NomeMedicamento}}</strong></td>
+            <td><strong>{{item.NomeFarmacia}}</strong></td>
+            <td style="position: center;"><input class="form-control" type="text" name="input" [(ngModel)]="item.Preco"
+                    style="width:150px; margin-left: 40px;" position disabled currencyMask
+                    [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+            </td>
+            <td class="text-center">
+                <button class="btn btn-danger btn-sm" data-target="#janelaexclusao" data-toggle="modal"
+                    (click)="obterPreco(item.IdMedicamentoFarmacia)">
+                    Excluir
+                </button>
+
+                <button class="btn btn-primary btn-sm" data-target="#janelaedicao" data-toggle="modal"
+                    (click)="obterPreco(item.IdMedicamentoFarmacia)">
+                    Editar
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="4">
+                Quantidade de registros: {{precos.length}}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+
+<div id="janelaexclusao" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h3 class="text-white">Exclusão de Preço</h3>
+            </div>
+            <div class="modal-body">
+                <strong>Deseja excluir o preço selecionado?</strong>
+                <hr />
+                Nome do medicamento: <strong>{{preco.NomeMedicamento}}</strong>
+                <br>
+                Nome da farmácia: <strong>{{preco.NomeFarmacia}}</strong>
+                <br>
+                <table>
+                    <tr>
+                        <td style="vertical-align: center;">
+                            <label for="teste">Preço do medicamento:</label>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" name="input" [(ngModel)]="preco.Preco"
+                                style="width:150px;" disabled currencyMask
+                                [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" id="teste" />
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default btn-sm" data-dismiss="modal">
+                    Cancelar
+                </button>
+                <button class="btn btn-danger btn-sm" data-dismiss="modal"
+                    (click)="excluirPreco(preco.IdMedicamentoFarmacia)">
+                    Confirmar Exclusão
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="janelaedicao" class="modal fade">
+    <button [disabled]="loadingVinculacao" #fechaModalVinculacao type="button" class="btn btn-danger"
+        data-dismiss="modal" hidden>Fechar</button>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h3 class="text-white">Atualizar Preço</h3>
+            </div>
+            <div class="modal-body">
+                
+                <form #formEdicao="ngForm" (submit)="atualizarPreco(formEdicao)">
+                    <input type="hidden" name="IdMedicamentoFarmacia" [(ngModel)]="preco.IdMedicamentoFarmacia" />
+                    <label>Selecione o Medicamento: </label>
+                    <select class="form-control" name="IdMedicamento" [(ngModel)]="preco.IdMedicamento" required>
+                        <option value="">Escolha uma opção</option>
+                        <option *ngFor="let item of medicamentos; let i = index" value="{{item.IdMedicamento}}">
+                            {{item.Nome}}
+                        </option>
+                    </select>
+                    <br>
+                    <label>Selecione a Farmácia: </label>
+                    <select class="form-control" name="IdFarmacia" [(ngModel)]="preco.IdFarmacia" required>
+                        <option value="">Escolha uma opção</option>
+                        <option *ngFor="let item of farmacias; let i = index" value="{{item.IdUsuario}}">
+                            {{item.Nome}}
+                        </option>
+                    </select>
+                    <br>
+                    <label>Concentração:</label>
+                    <input type="text" class="form-control" placeholder="Digite aqui" name="Concentracao"
+                        [(ngModel)]="preco.Concentracao" required />
+                    <br>
+                    <label>Apresentação:</label>
+                    <input type="text" class="form-control" placeholder="Digite aqui" name="Apresentacao"
+                        [(ngModel)]="preco.Apresentacao" required />
+                    <br>
+                    <label>Preço:</label>
+                    <input type="text" class="form-control" currencyMask [(ngModel)]="preco.Preco" required name="Preco"
+                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }" />
+                    <br>
+                    <label>Data início:</label>
+                    <input type="date" class="form-control" [(ngModel)]="preco.Inicio" required name="Inicio" />
+                    <br>
+                    <label>Data fim:</label>
+                    <input type="date" class="form-control" [(ngModel)]="preco.Fim" required name="Fim" />
+                    <br>
+                    <div class="text-right">
+                        <button class="btn btn-default btn-sm" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button class="btn btn-primary btn-sm" type="submit">
+                            Atualizar Dados
+                        </button>
+                        <br />
+                        <strong class="text-info">{{mensagem}}</strong>
+                        <br />
+                    </div>
+                    <div style="width: 500px;white-space: pre-line"><strong
+                            class="text-danger">{{erro_editado}}</strong>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+<br>
+<br>
+<h5 class="text-info"><strong>Consulta de Farmácia</strong></h5>
+<hr />
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th class="bg-info">Nome da farmácia</th>
+            <th class="bg-info">Opções</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of farmacias; let i = index">
+            <td><strong>{{item.Nome}}</strong></td>
+            <td class="text-center">
+                <button class="btn btn-danger btn-sm" data-target="#janelaexclusao" data-toggle="modal"
+                    (click)="obterFarmacia(item.IdUsuario)">
+                    Excluir
+                </button>
+
+                <button class="btn btn-primary btn-sm" data-target="#janelaedicao" data-toggle="modal"
+                    (click)="obterFarmacia(item.IdUsuario)">
+                    Editar
+                </button>
+            </td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2">
+                Quantidade de registros: {{farmacias.length}}
+            </td>
+        </tr>
+    </tfoot>
+</table>
+
+
+<div id="janelaexclusao" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h3 class="text-white">Exclusão de Farmácia</h3>
+            </div>
+            <div class="modal-body">
+                <strong>Deseja excluir a farmácia selecionada?</strong>
+                <hr />
+                Nome da farmácia: <strong>{{farmacia.Nome}}</strong>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default btn-sm" data-dismiss="modal">
+                    Cancelar
+                </button>
+                <button class="btn btn-danger btn-sm" data-dismiss="modal"
+                    (click)="excluirFarmacia(farmacia.IdUsuario)">
+                    Confirmar Exclusão
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="janelaedicao" class="modal fade" >
+    <button [disabled]="loadingVinculacao" #fechaModalVinculacao type="button" class="btn btn-danger" data-dismiss="modal" hidden>Fechar</button>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h3 class="text-white">Atualizar Farmácia</h3>
+            </div>
+            <div class="modal-body">
+                <form #formEdicao="ngForm" (submit)="atualizarFarmacia(formEdicao)">
+                    <input type="hidden" name="IdUsuario" [(ngModel)]="farmacia.IdUsuario" />
+                    <input type="hidden" name="Senha" ngModel />
+                    <label>Nome:</label>
+                    <input type="text" class="form-control" placeholder="Digite aqui" name="Nome"
+                        [(ngModel)]="farmacia.Nome" required />
+                    <br />
+                    <label>Razao social:</label>
+                    <input type="text" class="form-control" placeholder="Digite aqui" name="RazaoSocial"
+                        [(ngModel)]="farmacia.RazaoSocial" required />
+                    <br />
+                    <label>CNPJ:</label>
+                    <input type="text" mask="00.000.000/0000-00" class="form-control" placeholder="Digite aqui"
+                        name="Cnpj" [(ngModel)]="farmacia.Cnpj" required />
+                    <br />
+                    <label>Email:</label>
+                    <input type="email" class="form-control" placeholder="Digite aqui" name="Email"
+                        [(ngModel)]="farmacia.Email" required />
+                    <br />
+                    <label>Telefone:</label>
+                    <input type="text" mask="(00)00000-0000" class="form-control" placeholder="Digite aqui"
+                        name="Telefone" [(ngModel)]="farmacia.Telefone" />
+                    <br />
+                    <label>Site:</label>
+                    <input type="text" class="form-control" placeholder="Digite aqui" name="Site"
+                        [(ngModel)]="farmacia.Site" />
+                    <br />
+                    <div class="text-right">
+                        <button class="btn btn-default btn-sm" data-dismiss="modal">
+                            Cancelar
+                        </button>
+                        <button class="btn btn-primary btn-sm" type="submit">
+                            Atualizar Dados
+                        </button>
+                        <br />
+                        <strong class="text-info">{{mensagem}}</strong>
+                        <br />
+                    </div>
+                    <div style="width: 500px;white-space: pre-line"><strong
+                        class="text-danger">{{erro_editado}}</strong></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
